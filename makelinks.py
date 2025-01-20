@@ -2,6 +2,7 @@ import qrcode
 import urllib
 import re
 import os
+
 # https://docs.google.com/forms/d/e/1FAIpQLSe42v3lgS8YUPTlYIkupuH56MhJzeaRakqZTjE9lRhuP1U5ow/viewform?usp=pp_url&entry.1290452009=Python+Club
 
 
@@ -12,48 +13,48 @@ import os
 
 FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSe42v3lgS8YUPTlYIkupuH56MhJzeaRakqZTjE9lRhuP1U5ow/viewform?usp=pp_url&entry.1290452009="
 
+
 # read the club  list and return all the clubs in a list
 def read_clubs_from_file(filename):
-    with open(filename,"r",encoding = "utf8") as fp:
-        clubs= []
-        for  line in fp: 
+    with open(filename, "r", encoding="utf8") as fp:
+        clubs = []
+        for line in fp:
             line = line.strip()
-            clubs.append(line)  
+            clubs.append(line)
         return clubs
 
 
-#create a qrcode for the club and return file name
-def makeqrcode(clubname,dirname):
+# create a qrcode for the club and return file name
+def makeqrcode(clubname, dirname):
     # qrcode.make(FORM_LINK+clubname)
-    link = FORM_LINK+urllib.parse.quote_plus(clubname)
+    link = FORM_LINK + urllib.parse.quote_plus(clubname)
 
     print(link)
-    qr = qrcode.QRCode(version = 1,
-                   box_size = 5,
-                   border = 3)
+    qr = qrcode.QRCode(version=1, box_size=5, border=3)
 
     # Adding data to the instance 'qr'
     qr.add_data(link)
 
-    qr.make(fit = True)
-    img = qr.make_image(fill_color = 'green',
-                        back_color = 'gold')
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="green", back_color="gold")
 
     # replace any strange characters in a filename
     filename = re.sub(r"[^\w\.\-]", "", clubname) + ".png"
-    
-    img.save(os.path.join(dirname,filename))
-    
+
+    img.save(os.path.join(dirname, filename))
+
     return filename
+
 
 def makewebpage(clubname, qrfilename, dirname):
     filename = re.sub(r"[^\w\.\-]", "", clubname) + ".html"
-    filename = os.path.join(dirname,filename)
-    with open(filename,"w",encoding = "utf8") as fp:
+    filename = os.path.join(dirname, filename)
+    with open(filename, "w", encoding="utf8") as fp:
         fp.write(f"<h1>{clubname}</h1>\n")
         fp.write(f'<img src="{qrfilename}" alt="{clubname}">')
 
     return filename
+
 
 def main():
     clubs = read_clubs_from_file("clubs.txt")
@@ -64,9 +65,7 @@ def main():
         pass
     for clubname in clubs:
         qrfilename = makeqrcode(clubname, dirname)
-        makewebpage(clubname,qrfilename, dirname)
-
-
+        makewebpage(clubname, qrfilename, dirname)
 
 
 if __name__ == "__main__":
