@@ -47,7 +47,7 @@ def makeqrcode(clubname, dirname):
 
     return filename
 
-
+#gets rid of all the bad stuff
 def makewebpage(clubname, qrfilename, dirname):
     filename = re.sub(r"[^\w\.\-]", "", clubname) + ".html"
     filename = os.path.join(dirname, filename)
