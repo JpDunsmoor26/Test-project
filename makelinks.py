@@ -2,7 +2,7 @@ import qrcode
 import urllib
 import re
 import os
-#Andrew was here
+#Andrew here
 #Graham here
 #Bruce here
 # https://docs.google.com/forms/d/e/1FAIpQLSe42v3lgS8YUPTlYIkupuH56MhJzeaRakqZTjE9lRhuP1U5ow/viewform?usp=pp_url&entry.1290452009=Python+Club
